@@ -1,2 +1,2 @@
-# Moritz&Emma
+A game for my girlfriend
 
