@@ -1605,6 +1605,563 @@
                 cursor: grabbing;
                 transform: scale(1.15);
             }
+
+        /* ================= KNOCHEN VERSENKEN (BUDDEL-DUELL) ================= */
+        :root {
+            --dig-cell-size: 38px;
+        }
+
+        #dig-screen.theme-science {
+            --primary: #3742fa;
+            --primary-dark: #2f3542;
+        }
+
+        .dig-container {
+            width: 100%;
+            max-width: 1140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 36px;
+        }
+
+        .dig-setup-bar {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(8px);
+            border: 2px solid #dfe4ea;
+            border-radius: 18px;
+            padding: 10px 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 960px;
+            margin-bottom: 10px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+        }
+
+        .dig-setup-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dig-setup-label {
+            font-size: 0.76rem;
+            font-weight: 800;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-right: 2px;
+        }
+
+        .dig-pill-btn {
+            background: #fff;
+            border: 2px solid #dfe4ea;
+            border-radius: 14px;
+            padding: 6px 11px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: var(--text);
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+            transition: transform 0.1s, border-color 0.15s, background 0.15s;
+        }
+
+            .dig-pill-btn:hover {
+                border-color: var(--primary);
+            }
+
+            .dig-pill-btn:active {
+                transform: scale(0.95);
+            }
+
+            .dig-pill-btn.active {
+                background: var(--primary);
+                color: #fff;
+                border-color: var(--primary);
+            }
+
+        .dig-status-banner {
+            width: 100%;
+            max-width: 960px;
+            min-height: 50px;
+            background: #fff;
+            border: 2.5px solid #dfe4ea;
+            border-radius: 18px;
+            padding: 9px 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+        }
+
+            .dig-status-banner.highlight-found {
+                border-color: #ffa502;
+                background: #fff9ec;
+            }
+
+            .dig-status-banner.highlight-dug {
+                border-color: #2ed573;
+                background: #ecfdf5;
+            }
+
+            .dig-status-banner.highlight-miss {
+                border-color: #cbd5e1;
+                background: #f8fafc;
+            }
+
+        .dig-status-text {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.35;
+        }
+
+        .dig-turn-badge {
+            background: var(--primary);
+            color: #fff;
+            padding: 5px 11px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .dig-placement-workspace {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+            max-width: 960px;
+            flex-wrap: wrap;
+        }
+
+        .dig-placement-sidebar {
+            background: rgba(255,255,255,0.94);
+            border: 2px solid #dfe4ea;
+            border-radius: 20px;
+            padding: 14px;
+            width: 285px;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dig-palette {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .dig-palette-item {
+            background: #f8f9fa;
+            border: 2px solid #dfe4ea;
+            border-radius: 13px;
+            padding: 7px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.1s, border-color 0.15s, background 0.15s;
+        }
+
+            .dig-palette-item.selected {
+                border-color: var(--primary);
+                background: #fff0f3;
+            }
+
+        #dig-screen.theme-science .dig-palette-item.selected {
+            background: #eef2ff;
+        }
+
+        .dig-palette-item.placed {
+            opacity: 0.65;
+            background: #ecfdf5;
+            border-color: #2ed573;
+        }
+
+        .dig-palette-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 0.84rem;
+        }
+
+        .dig-palette-blocks {
+            display: flex;
+            gap: 3px;
+        }
+
+        .dig-palette-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 3px;
+        }
+
+        .dig-placement-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+            margin-top: 4px;
+        }
+
+        .dig-btn-ready {
+            grid-column: span 2;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            padding: 11px;
+            font-size: 0.94rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(46,213,115,0.3);
+        }
+
+            .dig-btn-ready:disabled {
+                opacity: 0.45;
+                cursor: not-allowed;
+                box-shadow: none;
+            }
+
+        .dig-battle-arena {
+            display: grid;
+            grid-template-columns: 205px auto auto 205px;
+            gap: 12px;
+            align-items: stretch;
+            justify-content: center;
+            width: 100%;
+        }
+
+        @media (max-width: 1020px) {
+            .dig-battle-arena {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .dig-companion-panel {
+                order: 2;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .dig-battle-arena {
+                grid-template-columns: 1fr;
+            }
+
+            :root {
+                --dig-cell-size: 35px;
+            }
+        }
+
+        .dig-companion-panel {
+            background: rgba(255,255,255,0.93);
+            border: 2px solid #dfe4ea;
+            border-radius: 20px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+            .dig-companion-panel.active-turn-panel {
+                border-color: var(--primary);
+                box-shadow: 0 8px 24px rgba(255,107,129,0.18);
+            }
+
+        .dig-pet-home {
+            background: linear-gradient(180deg, #fff0f3 0%, #ffe4e9 100%);
+            border: 2px dashed #ffc2cd;
+            border-radius: 15px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-height: 90px;
+            justify-content: center;
+        }
+
+        #dig-screen.theme-science .dig-pet-home {
+            background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+            border-color: #a5b4fc;
+        }
+
+        .dig-pet-avatar {
+            width: 60px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.1rem;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+            .dig-pet-avatar.away-digging {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+
+        .dig-pet-name {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .dig-pet-mood {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            background: rgba(255,255,255,0.9);
+            padding: 2px 7px;
+            border-radius: 10px;
+            margin-top: 3px;
+        }
+
+        .dig-tray-box {
+            flex: 1;
+            background: #f8f9fa;
+            border: 1.5px solid #edf2f7;
+            border-radius: 14px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .dig-tray-header {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--text-light);
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .dig-dug-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .dig-dug-slot {
+            background: #fff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 9px;
+            padding: 4px 7px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+            .dig-dug-slot.recovered {
+                background: #ecfdf5;
+                border-color: #2ed573;
+                color: var(--text);
+                font-weight: 800;
+                animation: popIn 0.28s ease;
+            }
+
+        .dig-board-card {
+            background: rgba(255,255,255,0.95);
+            border: 2px solid #dfe4ea;
+            border-radius: 22px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+        }
+
+            .dig-board-card.target-board-active {
+                border-color: var(--accent);
+                box-shadow: 0 10px 26px rgba(46,213,115,0.18);
+            }
+
+        .dig-board-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.84rem;
+            font-weight: 800;
+            gap: 6px;
+        }
+
+        .dig-sub-pill {
+            font-size: 0.7rem;
+            padding: 3px 7px;
+            border-radius: 9px;
+            background: #f1f2f6;
+            color: var(--text-light);
+        }
+
+        .dig-grid {
+            display: grid;
+            grid-template-columns: repeat(7, var(--dig-cell-size));
+            grid-template-rows: repeat(7, var(--dig-cell-size));
+            gap: 4px;
+            background: #7bed9f;
+            padding: 6px;
+            border-radius: 16px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.12);
+            touch-action: manipulation;
+        }
+
+        #dig-screen.theme-science .dig-grid {
+            background: #94a3b8;
+        }
+
+        .dig-cell {
+            width: var(--dig-cell-size);
+            height: var(--dig-cell-size);
+            border-radius: 8px;
+            background: #d1fae5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 900;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.15s;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.08);
+        }
+
+        #dig-screen.theme-science .dig-cell {
+            background: #f1f5f9;
+        }
+
+        .dig-cell:hover {
+            transform: scale(0.96);
+        }
+
+        .dig-cell.own-buried {
+            background: #ffeaa7;
+            border: 2px dashed #fdcb6e;
+        }
+
+        #dig-screen.theme-science .dig-cell.own-buried {
+            background: #e0e7ff;
+            border: 2px dashed #818cf8;
+        }
+
+        .dig-cell.preview-ok {
+            background: rgba(46, 213, 115, 0.65) !important;
+            box-shadow: inset 0 0 0 2px #2ed573;
+        }
+
+        .dig-cell.preview-bad {
+            background: rgba(255, 71, 87, 0.55) !important;
+            box-shadow: inset 0 0 0 2px #ff4757;
+        }
+
+        .dig-cell.cell-miss {
+            background: #d2b48c !important;
+            color: rgba(47,53,66,0.55);
+            cursor: default;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.18);
+        }
+
+        .dig-cell.cell-partial {
+            background: #fff3cd !important;
+            border: 2px solid #ffa502 !important;
+            cursor: default;
+            animation: pulsePartial 1.6s infinite ease-in-out;
+        }
+
+        .dig-cell.cell-dug-up {
+            background: #bbf7d0 !important;
+            border: 2px solid #22c55e !important;
+            cursor: default;
+        }
+
+        @keyframes pulsePartial {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(0.94);
+            }
+        }
+
+        #dig-runner-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 3000;
+        }
+
+        .runner-pet {
+            position: fixed;
+            width: 72px;
+            height: 50px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.25rem;
+            filter: drop-shadow(0 6px 10px rgba(0,0,0,0.22));
+        }
+
+            .runner-pet.digging-now {
+                animation: scratchDirt 0.14s infinite alternate;
+            }
+
+        @keyframes scratchDirt {
+            from {
+                transform: translate(-50%, -50%) rotate(-14deg) scale(1.08);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(14deg) scale(1.08);
+            }
+        }
+
+        .runner-speech {
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            border: 2px solid var(--primary);
+            color: var(--text);
+            padding: 3px 9px;
+            border-radius: 12px;
+            font-size: 0.74rem;
+            font-weight: 800;
+            white-space: nowrap;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+        }
+
+        .runner-loot-icon {
+            position: absolute;
+            bottom: -6px;
+            right: -6px;
+            font-size: 1.3rem;
+            background: #fff;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
@@ -1698,6 +2255,7 @@
                 <div class="side-mini-title">🎮 Klassiker</div>
                 <button class="mini-btn" onclick="openClassicGame('ttt')">❌ 3 Gewinnt ⭕</button>
                 <button class="mini-btn" onclick="openClassicGame('c4')">🔴 4 Gewinnt 🟡</button>
+                <button class="mini-btn" onclick="openDigGame()">🦴 Knochen versenken 🐾</button>
             </div>
             <div class="diff-cards">
                 <button class="diff-btn" onclick="startGame('easy')">
@@ -1842,6 +2400,150 @@
         </div>
     </div>
 
+    <!-- KNOCHEN VERSENKEN (BUDDEL-DUELL) SCREEN -->
+    <div id="dig-runner-layer">
+        <div id="runner-pet" class="runner-pet">
+            <div id="runner-speech" class="runner-speech">Schnüffel... 🐾</div>
+            <div id="runner-avatar">🐕</div>
+            <div id="runner-loot" class="runner-loot-icon">🦴</div>
+        </div>
+    </div>
+
+    <div id="dig-screen" class="screen">
+        <div class="dig-container">
+            <div class="game-header" style="max-width:960px;">
+                <button class="ctrl-btn" style="flex:none;min-width:auto;padding:7px 12px;" onclick="returnToMenu()">⬅ Menü</button>
+                <div class="stat-pill" id="dig-main-title">🦴 Knochen versenken</div>
+                <button class="ctrl-btn" style="flex:none;min-width:auto;padding:7px 12px;" onclick="initNewDigMatch()">🔄 Neu</button>
+            </div>
+
+            <div class="dig-setup-bar">
+                <div class="dig-setup-group">
+                    <span class="dig-setup-label">Welt:</span>
+                    <button class="dig-pill-btn active" id="dig-theme-btn-cute" onclick="setDigTheme('cute')">🐾 Dackel-Garten</button>
+                    <button class="dig-pill-btn" id="dig-theme-btn-science" onclick="setDigTheme('science')">🔬 Forscher-Labor</button>
+                </div>
+                <div class="dig-setup-group">
+                    <span class="dig-setup-label">Modus:</span>
+                    <button class="dig-pill-btn active" id="dig-mode-btn-bot" onclick="setDigMode('bot')">🤖 1 vs. Bot</button>
+                    <button class="dig-pill-btn" id="dig-mode-btn-pvp" onclick="setDigMode('pvp')">👥 1 vs. 1</button>
+                </div>
+                <div class="dig-setup-group" id="dig-bot-diff-group">
+                    <span class="dig-setup-label">Bot:</span>
+                    <button class="dig-pill-btn" id="dig-diff-btn-easy" onclick="setDigBotDiff('easy')">Leicht</button>
+                    <button class="dig-pill-btn active" id="dig-diff-btn-medium" onclick="setDigBotDiff('medium')">Schlau</button>
+                </div>
+            </div>
+
+            <div class="dig-status-banner" id="dig-status-banner">
+                <div class="dig-status-text" id="dig-status-text">Verstecke deine 5 Schätze im Garten!</div>
+                <div class="dig-turn-badge" id="dig-turn-badge">Vorbereitung</div>
+            </div>
+
+            <!-- PHASE 1: PLACEMENT -->
+            <div class="dig-placement-workspace" id="dig-placement-workspace">
+                <div class="dig-placement-sidebar">
+                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:.88rem;">
+                        <span>🎒 Deine Schätze</span>
+                        <span id="dig-orient-indicator" style="font-size:0.76rem;color:var(--primary-dark);">➡ Waagerecht</span>
+                    </div>
+                    <div class="dig-palette" id="dig-item-palette"></div>
+                    <div class="dig-placement-actions">
+                        <button class="dig-pill-btn" onclick="toggleDigPlacementOrientation()">🔄 Drehen</button>
+                        <button class="dig-pill-btn" onclick="randomizeCurrentDigPlacement()">🎲 Zufall</button>
+                        <button class="dig-pill-btn" style="grid-column: span 2;" onclick="clearCurrentDigPlacement()">🧹 Feld leeren</button>
+                        <button class="dig-btn-ready" id="btn-confirm-dig-placement" onclick="confirmDigPlacementPhase()">✅ Fertig versteckt!</button>
+                    </div>
+                </div>
+
+                <div class="dig-board-card">
+                    <div class="dig-board-header">
+                        <span id="dig-placement-board-title">🌱 Dein Versteck-Feld (7×7)</span>
+                        <span class="dig-sub-pill">Antippen zum Vergraben</span>
+                    </div>
+                    <div id="dig-placement-grid" class="dig-grid"></div>
+                </div>
+            </div>
+
+            <!-- PHASE 2: BATTLE -->
+            <div class="dig-battle-arena" id="dig-battle-arena" style="display:none;">
+                <div class="dig-companion-panel active-turn-panel" id="dig-left-companion-panel">
+                    <div class="dig-pet-home">
+                        <div class="dig-pet-avatar" id="dig-pet-avatar-left">🐕</div>
+                        <div class="dig-pet-name" id="dig-pet-name-left">Helga (Emma)</div>
+                        <div class="dig-pet-mood" id="dig-pet-mood-left">Bereit zum Buddeln! 🐾</div>
+                    </div>
+                    <div class="dig-tray-box">
+                        <div class="dig-tray-header">
+                            <span>🏆 Ausgegraben</span>
+                            <span id="dig-dug-count-left">0 / 5</span>
+                        </div>
+                        <div class="dig-dug-list" id="dig-dug-list-left"></div>
+                    </div>
+                </div>
+
+                <div class="dig-board-card">
+                    <div class="dig-board-header">
+                        <span id="dig-own-board-title">🏡 Dein Garten</span>
+                        <span class="dig-sub-pill" id="dig-own-remaining-pill">Noch 5 versteckt</span>
+                    </div>
+                    <div id="dig-own-battle-grid" class="dig-grid"></div>
+                </div>
+
+                <div class="dig-board-card target-board-active">
+                    <div class="dig-board-header">
+                        <span id="dig-target-board-title">🔍 Such-Feld (Hier buddeln!)</span>
+                        <span class="dig-sub-pill" id="dig-target-remaining-pill">Noch 5 versteckt</span>
+                    </div>
+                    <div id="dig-target-battle-grid" class="dig-grid"></div>
+                </div>
+
+                <div class="dig-companion-panel" id="dig-right-companion-panel">
+                    <div class="dig-pet-home">
+                        <div class="dig-pet-avatar" id="dig-pet-avatar-right">🐕‍🦺</div>
+                        <div class="dig-pet-name" id="dig-pet-name-right">Hugo (Bot)</div>
+                        <div class="dig-pet-mood" id="dig-pet-mood-right">Bewacht seine Schätze 👀</div>
+                    </div>
+                    <div class="dig-tray-box">
+                        <div class="dig-tray-header">
+                            <span>🏆 Ausgegraben</span>
+                            <span id="dig-dug-count-right">0 / 5</span>
+                        </div>
+                        <div class="dig-dug-list" id="dig-dug-list-right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KNOCHEN VERSENKEN MODALS -->
+    <div class="modal" id="dig-pov-switch-modal">
+        <div class="modal-content">
+            <div style="font-size:2.3rem;margin-bottom:4px;">🔄🐾</div>
+            <h2 style="margin:0 0 6px;color:var(--primary-dark);" id="dig-pov-modal-title">Spielerwechsel!</h2>
+            <p style="margin:0 0 12px;font-weight:700;color:var(--text-light);font-size:0.88rem;" id="dig-pov-modal-desc">
+                Die Spielfelder im Hintergrund sind jetzt neutral versteckt. Bitte übergebt das Gerät!
+            </p>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="confirmDigPovSwitch()">Ich bin bereit! ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="dig-gameover-modal">
+        <div class="modal-content">
+            <div style="font-size:2.5rem;margin-bottom:4px;" id="dig-go-modal-icon">🎉🏆</div>
+            <h2 style="margin:0 0 8px;color:var(--accent);" id="dig-go-modal-title">Gewonnen!</h2>
+            <p style="margin:0 0 12px;font-weight:700;color:var(--text);font-size:0.92rem;" id="dig-go-modal-msg">
+                Wahnsinn, Emma! Du hast alle Schätze zuerst ausgegraben! ❤️
+            </p>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="closeDigGameOverAndRestart()">Nochmal spielen ➔</button>
+                <button class="btn-secondary" onclick="closeDigGameOverToMenu()">Zurück zum Menü</button>
+            </div>
+        </div>
+    </div>
+
     <!-- UBONGO WIN MODAL -->
     <div id="win-modal" class="modal">
         <div class="modal-content">
@@ -1936,36 +2638,13 @@
         </div>
     </div>
 
-    <!-- WIKI MODAL -->
+    <!-- DYNAMIC WIKI MODAL -->
     <div id="wiki-modal" class="modal">
         <div class="modal-content wiki-wide">
-            <h2 style="margin:0 0 12px;color:var(--primary-dark);text-align:center;">📖 Emmas Spiele-Wiki</h2>
-            <div class="wiki-section">
-                <h4>🧩 Ubongo (Leicht bis Meister)</h4>
-                Ziehe alle Puzzleteile auf die weißen Felder des Spielbretts.<br>
-                • <b>Kurz antippen:</b> Dreht ein Teil in der Ablage im Uhrzeigersinn.<br>
-                • <b>Korrigieren:</b> Bereits gelegte Teile kannst du jederzeit wieder vom Brett herunterziehen.<br>
-                • <b>💡 Tipp-Button:</b> Zeigt dir kurz, wohin ein fehlendes Teil gehört.
-            </div>
-            <div class="wiki-section">
-                <h4>❌ 3 Gewinnt &amp; 🔴 4 Gewinnt</h4>
-                Spiele allein gegen den Bot (<i>Leicht, Mittel, Schwer</i>) oder zu zweit im <b>1 vs. 1 Modus</b>. Wer zuerst 3 bzw. 4 Steine in eine Reihe bringt, gewinnt!
-            </div>
-            <div class="wiki-section">
-                <h4>📦 Boxen-Zähler</h4>
-                Eine Platte fährt vorbei – merke dir die Anzahl!<br>
-                • <b>🟦 Klassik:</b> Zähle alle gelben Boxen.<br>
-                • <b>🌈 Bunt:</b> Zähle alle Boxen (<i>Leicht</i>) oder nur eine bestimmte Farbe (<i>Schwer</i>).<br>
-                • <b>🔺 Chaos:</b> Verschiedene Formen (Würfel, Zylinder, Pyramide).
-            </div>
-            <div class="wiki-section">
-                <h4>🐶 Dackel-Tamagotchi &amp; Hundehütte</h4>
-                • <b>🏠 Hundehütte:</b> Schaltest du die Dackel oben rechts aus, laufen Helga &amp; Hugo brav in ihre kleine Hundehütte unten links zum Schlafen – und flitzen wieder heraus, sobald du sie einschaltest.<br>
-                • <b>🥩 Futter-Auswahl:</b> Wähle zwischen Steak, Knochen, Käse oder einer Fitness-Karotte (lässt das dicke Bäuchlein schmelzen!).<br>
-                • <b>🎾 Spielzeug-Auswahl:</b> Wirf einen Tennisball, eine Quietsch-Ente, ein Frisbee oder ein Zerrseil.<br>
-                • <b>🎪 Kunststück:</b> Lass deinen ausgewählten Dackel einen lustigen Trick vorführen!
-            </div>
+            <h2 id="wiki-modal-title" style="margin:0 0 12px;color:var(--primary-dark);text-align:center;">📖 Emmas Spiele-Wiki</h2>
+            <div id="wiki-modal-body"></div>
             <div class="modal-actions">
+                <button class="btn-secondary" id="wiki-show-all-btn" style="display:none;" onclick="renderWikiContent('all')">📚 Alle Spiele-Regeln anzeigen</button>
                 <button class="btn-primary" onclick="closeWikiModal()">Alles klar! ❤️</button>
             </div>
         </div>
@@ -1994,14 +2673,163 @@
             const target = document.getElementById(screenId);
             if (target) { target.classList.add('active'); target.style.display = 'flex'; }
         }
+
+        // FIX #14: Schließt beim Menüwechsel ALLE Modals
+        function closeAllModals() {
+            const modalIds = [
+                'pov-switch-modal', 'gameover-modal', 'help-modal', 'wiki-modal',
+                'dig-pov-switch-modal', 'dig-gameover-modal',
+                'stats-filter-modal', 'win-modal', 'classic-modal', 'box-gameover-modal'
+            ];
+            modalIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('active');
+            });
+        }
+
         function returnToMenu() {
             clearInterval(timerInterval);
             stopBoxGameTimers();
+            stopDigGameTimers();
+            closeAllModals();
             updateMenuBestTimes();
             renderMainStatsSection();
             showOnlyScreen('menu-screen');
         }
-        function openWikiModal() { document.getElementById('wiki-modal').classList.add('active'); }
+
+        const WIKI_ARTICLES = {
+            ubongo: {
+                title: '🧩 Ubongo – Anleitung & Modi',
+                html: `
+                        <div class="wiki-section">
+                            <h4>🎯 Spielziel & Steuerung</h4>
+                            Lege alle bunten Puzzleteile aus der unteren Ablage so auf das Spielbrett, dass alle weißen Felder lückenlos bedeckt sind.<br>
+                            • <b>Drehen:</b> Tippe ein Teil in der Ablage kurz an oder nutze den Button <b>🔄 Drehen</b>.<br>
+                            • <b>Spiegeln:</b> Über <b>🪞 Spiegeln</b> klappst du das aktuell gewählte Teil um.<br>
+                            • <b>Umplatzieren:</b> Bereits auf dem Brett abgelegte Teile kannst du jederzeit wieder herunterziehen.<br>
+                            • <b>💡 Tipp:</b> Zeigt dir durch ein kurzes Aufblinken auf dem Brett, wohin ein noch fehlendes Teil gehört.
+                        </div>
+                        <div class="wiki-section">
+                            <h4>📊 Schwierigkeitsgrade</h4>
+                            • <b>🌸 Leicht:</b> 3 Teile auf einem 6×6-Raster (ideal zum Aufwärmen).<br>
+                            • <b>⭐ Mittel:</b> 4 Teile auf einem 7×7-Raster.<br>
+                            • <b>🔥 Schwer:</b> 5 Teile auf einem 8×8-Raster.<br>
+                            • <b>👑 Meister:</b> 6 komplexe Pentomino-Teile auf einem großen 10×10-Brett!
+                        </div>`
+            },
+            ttt: {
+                title: '❌ 3 Gewinnt – Anleitung & Modi',
+                html: `
+                        <div class="wiki-section">
+                            <h4>🎯 Spielregeln</h4>
+                            Setzt abwechselnd ❌ und ⭕ in das 3×3-Feld. Wer zuerst <b>3 eigene Symbole</b> waagerecht, senkrecht oder diagonal in eine Reihe bringt, gewinnt die Runde!
+                        </div>
+                        <div class="wiki-section">
+                            <h4>🤖 Modi & Bot-Stärken</h4>
+                            • <b>🤖 1 vs. Bot – Leicht:</b> Der Bot setzt zufällig und übersieht manchmal Chancen.<br>
+                            • <b>🤖 1 vs. Bot – Mittel:</b> Der Bot blockiert direkte Sieg-Reihen und nutzt eigene 3er-Chancen sofort.<br>
+                            • <b>🤖 1 vs. Bot – Schwer:</b> Perfekte Strategie (Minimax) – hier ist ein Unentschieden schon ein Meisterstück!<br>
+                            • <b>👥 1 vs. 1:</b> Spielt zu zweit abwechselnd an einem Gerät.
+                        </div>`
+            },
+            c4: {
+                title: '🔴 4 Gewinnt – Anleitung & Modi',
+                html: `
+                        <div class="wiki-section">
+                            <h4>🎯 Spielregeln</h4>
+                            Tippe auf eine der 7 Spalten, um deinen Spielstein (🔴 oder 🟡) von oben hineinfallen zu lassen. Der Stein landet auf dem untersten freien Platz. Wer zuerst <b>4 eigene Steine</b> waagerecht, senkrecht oder diagonal verbindet, gewinnt!
+                        </div>
+                        <div class="wiki-section">
+                            <h4>🤖 Modi & Bot-Stärken</h4>
+                            • <b>🤖 1 vs. Bot (Leicht / Mittel / Schwer):</b> Von entspannten Zügen bis hin zu vorausplanender Verteidigung der Brettmitte.<br>
+                            • <b>👥 1 vs. 1:</b> Klassisches Duell zu zweit am selben Bildschirm.
+                        </div>`
+            },
+            dig: {
+                title: '🦴 Knochen versenken – Anleitung & Modi',
+                html: `
+                        <div class="wiki-section">
+                            <h4>1. Verstecken (7×7 Garten)</h4>
+                            Zu Beginn vergräbt jeder Spieler <b>5 Schätze</b> (von 1 bis 4 Feldern Größe) im eigenen Garten. Du kannst sie per <b>🔄 Drehen</b> waagerecht oder senkrecht ausrichten oder per <b>🎲 Zufall</b> automatisch verteilen.
+                        </div>
+                        <div class="wiki-section">
+                            <h4>2. Buddeln & „Zu groß zum allein Ausgraben“</h4>
+                            Tippe rechts im Such-Feld auf ein Feld, um deinen Begleiter loszuschicken:<br>
+                            • <b>🕳️ Nur Erde:</b> Unter diesem Feld lag kein Schatz.<br>
+                            • <b>🐾 Teil-Treffer (⚠️):</b> Liegt dort ein mehrteiliger Schatz (z. B. der 4er Riesen-Knochen), meldet dein Tier: <i>„Zu groß zum allein Ausgraben!“</i>. Erst wenn <b>alle Felder</b> dieses Schatzes freigelegt sind, trägt dein Begleiter ihn stolz in dein Schatz-Lager!
+                        </div>
+                        <div class="wiki-section">
+                            <h4>🌍 Welten, Bot & 1-vs-1 Sichtschutz</h4>
+                            • <b>🐾 Dackel-Garten vs. 🔬 Forscher-Labor:</b> Wechsle jederzeit zwischen Helga & Hugo (Knochen, Entchen, Liebesbrief) und Prof. Fuchs & Dr. Eule (T-Rex-Fossil, DNA, Kristall).<br>
+                            • <b>🤖 Bot (Leicht / Schlau):</b> Auf <i>Schlau</i> merkt sich der Bot angegrabene Schätze und gräbt gezielt die Nachbarfelder ab!<br>
+                            • <b>👥 1 vs. 1 Sichtschutz:</b> Beim Spielerwechsel werden beide Gärten automatisch neutral verdeckt, bis das Gerät übergeben wurde.
+                        </div>`
+            },
+            box: {
+                title: '📦 Boxen-Zähler – Anleitung & Modi',
+                html: `
+                        <div class="wiki-section">
+                            <h4>🎯 Spielablauf</h4>
+                            Eine Plattform fährt über das Förderband. Zähle blitzschnell die gesuchten Objekte und tippe die Zahl über das Numpad ein, bevor der 7-Sekunden-Timer abläuft! Du hast <b>3 Leben (❤️❤️❤️)</b>.
+                        </div>
+                        <div class="wiki-section">
+                            <h4>🌈 Alle Spielmodi & Schwierigkeiten</h4>
+                            • <b>🟦 Klassik-Modus:</b> Gleich große gelbe Boxen auf blauer Platte – zähle einfach alle!<br>
+                            • <b>🌈 Bunter Modus:</b> <i>Leicht:</i> Zähle alle bunten Boxen. <i>Schwer:</i> Zähle nur Boxen einer bestimmten Ziel-Farbe!<br>
+                            • <b>🔺 Chaos & Formen:</b> Verschieden große 3D-Körper (Würfel, Zylinder, Pyramiden). <i>Leicht:</i> Alle zählen. <i>Mittel:</i> Nur eine Farbe. <i>Schwer:</i> Nur eine exakte Kombination aus Farbe + Form (z. B. nur rote Pyramiden)!
+                        </div>`
+            },
+            dogs: {
+                title: '🐶 Dackel-Tamagotchi & Hundehütte',
+                html: `
+                        <div class="wiki-section">
+                            <h4>🐕 Helga & Hugo pflegen</h4>
+                            • <b>🏠 Hundehütte:</b> Schaltest du die Dackel oben rechts aus, tapsen beide brav in ihre Hütte unten links zum Schlafen.<br>
+                            • <b>🥩 Füttern & Bäuchlein:</b> Steak, Knochen und Käse machen satt und glücklich (und ein kleines Kugel-Bäuchlein!). Die <b>🥕 Fitness-Karotte</b> und Bewegung lassen sie wieder abnehmen.<br>
+                            • <b>🎾 Spielzeug & 🎪 Kunststück:</b> Wirf Ball, Ente, Frisbee oder Zerrseil – nach ein paar Stupsern vergraben die Dackel ihr Spielzeug im Garten!
+                        </div>`
+            }
+        };
+
+        function getActiveGameKeyForWiki() {
+            if (document.getElementById('game-screen').classList.contains('active')) return 'ubongo';
+            if (document.getElementById('classic-screen').classList.contains('active')) {
+                return classicGameType === 'c4' ? 'c4' : 'ttt';
+            }
+            if (document.getElementById('dig-screen') && document.getElementById('dig-screen').classList.contains('active')) return 'dig';
+            if (document.getElementById('box-screen').classList.contains('active')) return 'box';
+            return 'all';
+        }
+
+        function renderWikiContent(modeKey) {
+            const titleEl = document.getElementById('wiki-modal-title');
+            const bodyEl = document.getElementById('wiki-modal-body');
+            const showAllBtn = document.getElementById('wiki-show-all-btn');
+            if (!titleEl || !bodyEl || !showAllBtn) return;
+
+            if (modeKey === 'all' || !WIKI_ARTICLES[modeKey]) {
+                titleEl.textContent = '📖 Emmas Spiele-Wiki (Alle Spiele)';
+                showAllBtn.style.display = 'none';
+                bodyEl.innerHTML =
+                    WIKI_ARTICLES.ubongo.html +
+                    WIKI_ARTICLES.ttt.html +
+                    WIKI_ARTICLES.c4.html +
+                    WIKI_ARTICLES.dig.html +
+                    WIKI_ARTICLES.box.html +
+                    WIKI_ARTICLES.dogs.html;
+            } else {
+                const art = WIKI_ARTICLES[modeKey];
+                titleEl.textContent = art.title;
+                bodyEl.innerHTML = art.html;
+                showAllBtn.style.display = 'block';
+            }
+        }
+
+        function openWikiModal() {
+            const currentKey = getActiveGameKeyForWiki();
+            renderWikiContent(currentKey);
+            document.getElementById('wiki-modal').classList.add('active');
+        }
         function closeWikiModal() { document.getElementById('wiki-modal').classList.remove('active'); }
 
         /* =========================================================================
@@ -2020,6 +2848,9 @@
             { id: 'c4_bot_medium', label: '🔴 4G Bot Mittel', cat: 'classic', catLabel: 'Klassiker', unit: 'win' },
             { id: 'c4_bot_hard', label: '🔴 4G Bot Schwer', cat: 'classic', catLabel: 'Klassiker', unit: 'win' },
             { id: 'c4_pvp', label: '🔴 4G (1 vs. 1)', cat: 'classic', catLabel: 'Klassiker', unit: 'win' },
+            { id: 'dig_bot_easy', label: '🦴 Buddeln Bot Leicht', cat: 'classic', catLabel: 'Klassiker', unit: 'win' },
+            { id: 'dig_bot_medium', label: '🦴 Buddeln Bot Schlau', cat: 'classic', catLabel: 'Klassiker', unit: 'win' },
+            { id: 'dig_pvp', label: '🦴 Buddeln (1 vs. 1)', cat: 'classic', catLabel: 'Klassiker', unit: 'win' },
             { id: 'box_classic_normal', label: '🟦 Boxen Klassik', cat: 'box', catLabel: 'Boxen', unit: 'score' },
             { id: 'box_colorful_easy', label: '🌈 Boxen Bunt (Leicht)', cat: 'box', catLabel: 'Boxen', unit: 'score' },
             { id: 'box_colorful_hard', label: '🌈 Boxen Bunt (Schwer)', cat: 'box', catLabel: 'Boxen', unit: 'score' },
@@ -2072,10 +2903,8 @@
         }
 
         function initStatsSystem() {
-            // Default alle Spiele im Filter aktivieren
             STAT_GAME_DEFS.forEach(g => { statsFilterConfig.games[g.id] = true; });
 
-            // Gespeicherte Filter laden
             try {
                 const rawFlt = localStorage.getItem(FILTER_STORAGE_KEY);
                 if (rawFlt) {
@@ -2088,7 +2917,6 @@
                 }
             } catch (e) { }
 
-            // Gespeicherte Stats laden
             try {
                 const rawStats = localStorage.getItem(STATS_STORAGE_KEY);
                 if (rawStats) {
@@ -2099,12 +2927,10 @@
 
             if (!gameStatsData || typeof gameStatsData !== 'object') gameStatsData = {};
 
-            // Sicherstellen, dass jeder Key existiert & bestehende alte Rekorde migrieren
             STAT_GAME_DEFS.forEach(g => {
                 if (!gameStatsData[g.id] || typeof gameStatsData[g.id] !== 'object') {
                     gameStatsData[g.id] = createEmptyStatEntry();
                 } else {
-                    // Fehlende Felder auffüllen (z.B. bei alten Ständen)
                     const empty = createEmptyStatEntry();
                     for (const key in empty) {
                         if (!(key in gameStatsData[g.id])) gameStatsData[g.id][key] = empty[key];
@@ -2112,7 +2938,6 @@
                 }
             });
 
-            // Migration vorhandener Ubongo-Bestzeiten aus localStorage
             ['easy', 'medium', 'hard', 'expert'].forEach(diff => {
                 const oldBest = getBestTime(diff);
                 const entry = gameStatsData['ubongo_' + diff];
@@ -2122,7 +2947,6 @@
                 }
             });
 
-            // Migration vorhandener Boxen-Bestenlisten
             ['classic_normal', 'colorful_easy', 'colorful_hard', 'shapes_easy', 'shapes_medium', 'shapes_hard'].forEach(k => {
                 const rawLb = localStorage.getItem('emma_box_lb_' + k);
                 if (rawLb) {
@@ -2184,7 +3008,6 @@
             entry.timeSpentSec += elapsed;
             entry.lastPlayedTs = Date.now();
             if (winner === 0) entry.draws++;
-            // Nur echte Bot-Siege (Spieler 1) zählen als Sieg; PvP wird separat nur über "played"/"draws" erfasst
             else if (mode === 'bot' && winner === 1) entry.wins++;
             saveStatsData();
         }
@@ -2230,7 +3053,6 @@
             const tbodyEl = document.getElementById('stats-table-body');
             if (!summaryEl || !theadEl || !tbodyEl) return;
 
-            // 1. Summary Cards berechnen (immer über ALLE gespeicherten Daten)
             let totalPlayed = 0, totalWins = 0, totalTimeSec = 0;
             STAT_GAME_DEFS.forEach(g => {
                 const d = gameStatsData[g.id] || createEmptyStatEntry();
@@ -2250,17 +3072,14 @@
                 summaryEl.style.display = 'none';
             }
 
-            // 2. Aktive Spalten & Spiele ermitteln
             const activeCols = STAT_COL_DEFS.filter(c => statsFilterConfig.cols[c.id]);
             const activeGames = STAT_GAME_DEFS.filter(g => statsFilterConfig.games[g.id]);
 
-            // 3. Tabellenkopf bauen
             let headHtml = '<tr><th>Spiel / Modus</th>';
             activeCols.forEach(c => { headHtml += '<th>' + c.label + '</th>'; });
             headHtml += '</tr>';
             theadEl.innerHTML = headHtml;
 
-            // 4. Tabellenkörper bauen
             if (activeGames.length === 0) {
                 tbodyEl.innerHTML = '<tr><td colspan="' + (activeCols.length + 1) + '" style="text-align:center;padding:22px;color:var(--text-light);">Keine Spiele im Filter ausgewählt. Klicke oben rechts auf <b>⚙️ Ansicht &amp; Filter anpassen</b>!</td></tr>';
                 return;
@@ -2651,7 +3470,6 @@
                 generated = generateConnectedPuzzle(cfg.grid, Math.max(2, cfg.count - 1), cfg.maxSize);
             }
             if (!generated) {
-                // Notfall-Fallback, damit nie ein leerer Zustand entsteht
                 const mask = createFallbackMask(cfg.grid);
                 generated = { mask, pieces: [], placements: [] };
             }
@@ -4525,6 +5343,792 @@
                 }
             }
             requestAnimationFrame(updateDachshundsLoop);
+        }
+
+        /* =========================================================================
+           6. KNOCHEN VERSENKEN (BUDDEL-DUELL) ENGINE
+           ========================================================================= */
+        const DIG_THEMES = {
+            cute: {
+                title: '🦴 Knochen versenken',
+                p1PetName: 'Helga', p2PetName: 'Hugo',
+                p1Avatar: '🐕', p2Avatar: '🐕‍🦺',
+                boardNameOwn: '🏡 Dein Garten',
+                boardNameTarget: '🌻 Nachbars Garten (Hier buddeln!)',
+                missIcon: '🕳️', partialIcon: '🐾',
+                items: [
+                    { id: 'giant_bone', name: 'Riesen-Knochen', size: 4, icon: '🦴', color: '#ffa502' },
+                    { id: 'rubber_duck', name: 'Quietsche-Entchen', size: 3, icon: '🐤', color: '#feca57' },
+                    { id: 'love_letter', name: 'Liebesbrief-Schatz', size: 3, icon: '💌', color: '#ff6b81' },
+                    { id: 'heart_pillow', name: 'Herzkissen', size: 2, icon: '🧸', color: '#a55eea' },
+                    { id: 'gold_treat', name: 'Gold-Leckerli', size: 1, icon: '🍪', color: '#feca57' }
+                ]
+            },
+            science: {
+                title: '🔬 Forscher-Expedition',
+                p1PetName: 'Prof. Fuchs', p2PetName: 'Dr. Eule',
+                p1Avatar: '🦊', p2Avatar: '🦉',
+                boardNameOwn: '⛺ Dein Ausgrabungscamp',
+                boardNameTarget: '🧭 Forschungs-Sektor (Hier graben!)',
+                missIcon: '🪨', partialIcon: '⛏️',
+                items: [
+                    { id: 'trex_skull', name: 'T-Rex-Skelett', size: 4, icon: '🦖', color: '#3742fa' },
+                    { id: 'dna_helix', name: 'Bernstein-DNA', size: 3, icon: '🧬', color: '#a55eea' },
+                    { id: 'microscope', name: 'Gold-Mikroskop', size: 3, icon: '🔬', color: '#1e90ff' },
+                    { id: 'lab_flask', name: 'Elixier-Kolben', size: 2, icon: '🧪', color: '#2ed573' },
+                    { id: 'quantum_crystal', name: 'Quanten-Kristall', size: 1, icon: '💎', color: '#ff4757' }
+                ]
+            }
+        };
+
+        const DIG_GRID_SIZE = 7;
+        const DIG_TIMING = { RUN_TO: 380, DIG: 550, RESULT_HOLD: 1900, RUN_BACK: 520, BOT_DELAY: 520 };
+
+        let digTheme = 'cute';
+        let digMode = 'bot';
+        let digBotDiff = 'medium';
+        let digPhase = 'placement';
+        let digActivePlayerIdx = 0;
+        let digPlacementHorizontal = true;
+        let digSelectedPaletteId = null;
+        let digPovMasked = false;
+        let digActionLocked = false;
+        let digPendingPovCallback = null;
+        let digPlayers = [];
+        let digTimeouts = [];
+
+        // FIX #9: Timeout entfernt sich nach Ablauf selbst aus dem Array
+        function registerDigTimeout(fn, delay) {
+            const id = setTimeout(() => {
+                const idx = digTimeouts.indexOf(id);
+                if (idx !== -1) digTimeouts.splice(idx, 1);
+                fn();
+            }, delay);
+            digTimeouts.push(id);
+            return id;
+        }
+
+        // FIX #16: Räumt auch away-digging auf und setzt pending callback zurück
+        function stopDigGameTimers() {
+            digTimeouts.forEach(id => clearTimeout(id));
+            digTimeouts = [];
+            digActionLocked = false;
+            digPendingPovCallback = null;
+            const runnerEl = document.getElementById('runner-pet');
+            if (runnerEl) {
+                runnerEl.style.display = 'none';
+                runnerEl.classList.remove('digging-now');
+            }
+            document.querySelectorAll('.dig-pet-avatar').forEach(el => el.classList.remove('away-digging'));
+        }
+
+        function getDigThemeObj() { return DIG_THEMES[digTheme] || DIG_THEMES.cute; }
+
+        function openDigGame() {
+            showOnlyScreen('dig-screen');
+            initNewDigMatch();
+        }
+
+        function createDigPlayerState(idx) {
+            const t = getDigThemeObj();
+            return {
+                idx,
+                name: idx === 0 ? 'Emma' : (digMode === 'bot' ? 'Bot' : 'Spieler 2'),
+                petName: idx === 0 ? t.p1PetName : t.p2PetName,
+                avatar: idx === 0 ? t.p1Avatar : t.p2Avatar,
+                grid: Array.from({ length: DIG_GRID_SIZE }, () =>
+                    Array.from({ length: DIG_GRID_SIZE }, () => ({ itemId: null, dug: false }))
+                ),
+                placements: {},
+                dugByMe: []
+            };
+        }
+
+        function setDigTheme(themeKey) {
+            if (!DIG_THEMES[themeKey]) return;
+            digTheme = themeKey;
+            const screenEl = document.getElementById('dig-screen');
+            if (screenEl) screenEl.classList.toggle('theme-science', themeKey === 'science');
+            document.getElementById('dig-theme-btn-cute').classList.toggle('active', themeKey === 'cute');
+            document.getElementById('dig-theme-btn-science').classList.toggle('active', themeKey === 'science');
+            document.getElementById('dig-main-title').textContent = getDigThemeObj().title;
+            initNewDigMatch();
+        }
+
+        function setDigMode(mode) {
+            digMode = mode;
+            document.getElementById('dig-mode-btn-bot').classList.toggle('active', mode === 'bot');
+            document.getElementById('dig-mode-btn-pvp').classList.toggle('active', mode === 'pvp');
+            document.getElementById('dig-bot-diff-group').style.display = mode === 'bot' ? 'flex' : 'none';
+            initNewDigMatch();
+        }
+
+        function setDigBotDiff(diff) {
+            digBotDiff = diff;
+            document.getElementById('dig-diff-btn-easy').classList.toggle('active', diff === 'easy');
+            document.getElementById('dig-diff-btn-medium').classList.toggle('active', diff === 'medium');
+            initNewDigMatch();
+        }
+
+        function initNewDigMatch() {
+            stopDigGameTimers();
+            digPovMasked = false;
+            digPendingPovCallback = null;
+            digPhase = 'placement';
+            digActivePlayerIdx = 0;
+            digPlacementHorizontal = true;
+            activeMatchStartTime = performance.now();
+            digPlayers = [createDigPlayerState(0), createDigPlayerState(1)];
+
+            const t = getDigThemeObj();
+            digSelectedPaletteId = t.items[0] ? t.items[0].id : null;
+
+            document.getElementById('dig-placement-workspace').style.display = 'flex';
+            document.getElementById('dig-battle-arena').style.display = 'none';
+            document.getElementById('dig-pov-switch-modal').classList.remove('active');
+            document.getElementById('dig-gameover-modal').classList.remove('active');
+            document.querySelectorAll('.dig-pet-avatar').forEach(el => el.classList.remove('away-digging'));
+
+            updateDigPlacementUI();
+        }
+
+        function updateDigPlacementUI() {
+            const p = digPlayers[digActivePlayerIdx];
+            const t = getDigThemeObj();
+            if (!p) return;
+
+            document.getElementById('dig-status-banner').className = 'dig-status-banner';
+            document.getElementById('dig-status-text').innerHTML =
+                `<b>${p.name}</b> (${p.avatar} ${p.petName}): Verstecke alle ${t.items.length} Schätze auf deinem Feld!`;
+            document.getElementById('dig-turn-badge').textContent = `${p.name} versteckt`;
+            document.getElementById('dig-placement-board-title').textContent =
+                `${p.avatar} Versteck-Feld von ${p.name} (7×7)`;
+            document.getElementById('dig-orient-indicator').textContent =
+                digPlacementHorizontal ? '➡ Waagerecht' : '⬇ Senkrecht';
+
+            renderDigPalette();
+            renderDigPlacementGrid();
+
+            const allPlaced = t.items.every(it => !!p.placements[it.id]);
+            document.getElementById('btn-confirm-dig-placement').disabled = !allPlaced;
+        }
+
+        function renderDigPalette() {
+            const p = digPlayers[digActivePlayerIdx];
+            const t = getDigThemeObj();
+            const container = document.getElementById('dig-item-palette');
+            if (!container || !p) return;
+
+            if (!digSelectedPaletteId || p.placements[digSelectedPaletteId]) {
+                const nextUnplaced = t.items.find(it => !p.placements[it.id]);
+                digSelectedPaletteId = nextUnplaced ? nextUnplaced.id : (t.items[0] ? t.items[0].id : null);
+            }
+
+            container.innerHTML = t.items.map(item => {
+                const isPlaced = !!p.placements[item.id];
+                const isSelected = digSelectedPaletteId === item.id;
+                const dots = Array.from({ length: item.size }, () =>
+                    `<span class="dig-palette-dot" style="background:${item.color};"></span>`
+                ).join('');
+
+                return `
+                        <div class="dig-palette-item ${isSelected ? 'selected' : ''} ${isPlaced ? 'placed' : ''}"
+                             onclick="selectDigPaletteItem('${item.id}')">
+                            <div class="dig-palette-left">
+                                <span style="font-size:1.2rem;">${item.icon}</span>
+                                <div>
+                                    <div>${item.name}</div>
+                                    <div style="font-size:0.7rem;color:var(--text-light);">${item.size} ${item.size === 1 ? 'Feld' : 'Felder'} ${isPlaced ? '• ✓ Vergraben' : ''}</div>
+                                </div>
+                            </div>
+                            <div class="dig-palette-blocks">${dots}</div>
+                        </div>`;
+            }).join('');
+        }
+
+        function selectDigPaletteItem(itemId) {
+            const p = digPlayers[digActivePlayerIdx];
+            if (!p) return;
+            if (p.placements[itemId]) removeDigItemFromGrid(p, itemId);
+            digSelectedPaletteId = itemId;
+            updateDigPlacementUI();
+        }
+
+        function toggleDigPlacementOrientation() {
+            digPlacementHorizontal = !digPlacementHorizontal;
+            updateDigPlacementUI();
+        }
+
+        function removeDigItemFromGrid(player, itemId) {
+            const pl = player.placements[itemId];
+            if (!pl) return;
+            pl.cells.forEach(([r, c]) => { player.grid[r][c].itemId = null; });
+            delete player.placements[itemId];
+        }
+
+        function getDigCellsForPlacement(r, c, size, horizontal) {
+            const cells = [];
+            for (let i = 0; i < size; i++) {
+                cells.push([horizontal ? r : r + i, horizontal ? c + i : c]);
+            }
+            return cells;
+        }
+
+        function canPlaceDigCells(player, cells) {
+            for (const [r, c] of cells) {
+                if (r < 0 || r >= DIG_GRID_SIZE || c < 0 || c >= DIG_GRID_SIZE) return false;
+                if (player.grid[r][c].itemId !== null) return false;
+            }
+            return true;
+        }
+
+        function renderDigPlacementGrid() {
+            const p = digPlayers[digActivePlayerIdx];
+            const t = getDigThemeObj();
+            const gridEl = document.getElementById('dig-placement-grid');
+            if (!gridEl || !p) return;
+
+            const frag = document.createDocumentFragment();
+            for (let r = 0; r < DIG_GRID_SIZE; r++) {
+                for (let c = 0; c < DIG_GRID_SIZE; c++) {
+                    const cellEl = document.createElement('div');
+                    cellEl.className = 'dig-cell';
+                    cellEl.dataset.r = r;
+                    cellEl.dataset.c = c;
+
+                    if (!digPovMasked) {
+                        const cellData = p.grid[r][c];
+                        if (cellData.itemId) {
+                            const itemDef = t.items.find(it => it.id === cellData.itemId);
+                            cellEl.classList.add('own-buried');
+                            cellEl.textContent = itemDef ? itemDef.icon : '📦';
+                        }
+                    }
+                    cellEl.addEventListener('pointerenter', () => previewDigPlacementHover(r, c));
+                    cellEl.addEventListener('pointerleave', clearDigPlacementHover);
+                    cellEl.addEventListener('click', () => handleDigPlacementCellClick(r, c));
+                    frag.appendChild(cellEl);
+                }
+            }
+            gridEl.innerHTML = '';
+            gridEl.appendChild(frag);
+        }
+
+        function previewDigPlacementHover(r, c) {
+            clearDigPlacementHover();
+            if (digPovMasked || !digSelectedPaletteId) return;
+            const p = digPlayers[digActivePlayerIdx];
+            const itemDef = getDigThemeObj().items.find(it => it.id === digSelectedPaletteId);
+            if (!p || !itemDef || p.placements[itemDef.id]) return;
+
+            const cells = getDigCellsForPlacement(r, c, itemDef.size, digPlacementHorizontal);
+            const ok = canPlaceDigCells(p, cells);
+            cells.forEach(([cr, cc]) => {
+                if (cr >= 0 && cr < DIG_GRID_SIZE && cc >= 0 && cc < DIG_GRID_SIZE) {
+                    const el = document.querySelector(`#dig-placement-grid .dig-cell[data-r="${cr}"][data-c="${cc}"]`);
+                    if (el) el.classList.add(ok ? 'preview-ok' : 'preview-bad');
+                }
+            });
+        }
+
+        function clearDigPlacementHover() {
+            document.querySelectorAll('#dig-placement-grid .dig-cell').forEach(el => {
+                el.classList.remove('preview-ok', 'preview-bad');
+            });
+        }
+
+        function handleDigPlacementCellClick(r, c) {
+            if (digPovMasked) return;
+            const p = digPlayers[digActivePlayerIdx];
+            const t = getDigThemeObj();
+            if (!p) return;
+
+            const existingId = p.grid[r][c].itemId;
+            if (existingId) {
+                removeDigItemFromGrid(p, existingId);
+                digSelectedPaletteId = existingId;
+                updateDigPlacementUI();
+                return;
+            }
+            if (!digSelectedPaletteId) return;
+            const itemDef = t.items.find(it => it.id === digSelectedPaletteId);
+            if (!itemDef || p.placements[itemDef.id]) return;
+
+            const cells = getDigCellsForPlacement(r, c, itemDef.size, digPlacementHorizontal);
+            if (!canPlaceDigCells(p, cells)) return;
+
+            cells.forEach(([cr, cc]) => { p.grid[cr][cc].itemId = itemDef.id; });
+            p.placements[itemDef.id] = { id: itemDef.id, cells, fullyDug: false };
+
+            const nextFree = t.items.find(it => !p.placements[it.id]);
+            digSelectedPaletteId = nextFree ? nextFree.id : itemDef.id;
+            updateDigPlacementUI();
+        }
+
+        function clearCurrentDigPlacement() {
+            const p = digPlayers[digActivePlayerIdx];
+            if (!p) return;
+            p.grid.forEach(row => row.forEach(cell => { cell.itemId = null; cell.dug = false; }));
+            p.placements = {};
+            const t = getDigThemeObj();
+            digSelectedPaletteId = t.items[0] ? t.items[0].id : null;
+            updateDigPlacementUI();
+        }
+
+        function randomizeDigPlayerPlacement(player) {
+            if (!player) return;
+            player.grid.forEach(row => row.forEach(cell => { cell.itemId = null; cell.dug = false; }));
+            player.placements = {};
+            getDigThemeObj().items.forEach(item => {
+                let placed = false;
+                for (let attempt = 0; attempt < 250 && !placed; attempt++) {
+                    const horiz = Math.random() < 0.5;
+                    const r = Math.floor(Math.random() * DIG_GRID_SIZE);
+                    const c = Math.floor(Math.random() * DIG_GRID_SIZE);
+                    const cells = getDigCellsForPlacement(r, c, item.size, horiz);
+                    if (canPlaceDigCells(player, cells)) {
+                        cells.forEach(([cr, cc]) => { player.grid[cr][cc].itemId = item.id; });
+                        player.placements[item.id] = { id: item.id, cells, fullyDug: false };
+                        placed = true;
+                    }
+                }
+            });
+        }
+
+        function randomizeCurrentDigPlacement() {
+            randomizeDigPlayerPlacement(digPlayers[digActivePlayerIdx]);
+            updateDigPlacementUI();
+        }
+
+        function confirmDigPlacementPhase() {
+            if (digMode === 'bot') {
+                randomizeDigPlayerPlacement(digPlayers[1]);
+                startDigBattlePhase();
+            } else {
+                if (digActivePlayerIdx === 0) {
+                    digActivePlayerIdx = 1;
+                    digSelectedPaletteId = getDigThemeObj().items[0].id;
+                    openDigPovSwitchModal(
+                        'Spieler 2 ist dran mit Verstecken!',
+                        'Das Feld im Hintergrund ist jetzt neutral. Bitte übergebt das Gerät an Spieler 2.',
+                        () => { updateDigPlacementUI(); }
+                    );
+                } else {
+                    digActivePlayerIdx = 0;
+                    openDigPovSwitchModal(
+                        'Alle Schätze sind vergraben!',
+                        'Beide Gärten sind bereit. Emma (Spieler 1) beginnt mit dem ersten Buddel-Versuch!',
+                        () => { startDigBattlePhase(); }
+                    );
+                }
+            }
+        }
+
+        function openDigPovSwitchModal(title, desc, onConfirm) {
+            digPovMasked = true;
+            digPendingPovCallback = onConfirm;
+            if (digPhase === 'placement') renderDigPlacementGrid();
+            else renderDigBattleArena();
+            document.getElementById('dig-pov-modal-title').textContent = title;
+            document.getElementById('dig-pov-modal-desc').textContent = desc;
+            document.getElementById('dig-pov-switch-modal').classList.add('active');
+        }
+
+        function confirmDigPovSwitch() {
+            document.getElementById('dig-pov-switch-modal').classList.remove('active');
+            digPovMasked = false;
+            if (typeof digPendingPovCallback === 'function') {
+                const cb = digPendingPovCallback;
+                digPendingPovCallback = null;
+                cb();
+            }
+        }
+
+        function startDigBattlePhase() {
+            digPhase = 'battle';
+            digActivePlayerIdx = 0;
+            digPovMasked = false;
+            digActionLocked = false;
+            activeMatchStartTime = performance.now();
+
+            document.getElementById('dig-placement-workspace').style.display = 'none';
+            document.getElementById('dig-battle-arena').style.display = 'grid';
+
+            setDigStatusMessage(
+                `<b>${digPlayers[0].name}</b> ist dran! Tippe rechts im Such-Feld auf ein Rasenstück, um <b>${digPlayers[0].petName}</b> (${digPlayers[0].avatar}) zum Buddeln loszuschicken!`,
+                'normal'
+            );
+            renderDigBattleArena();
+        }
+
+        function setDigStatusMessage(html, type) {
+            const banner = document.getElementById('dig-status-banner');
+            if (!banner) return;
+            banner.className = 'dig-status-banner';
+            if (type === 'found') banner.classList.add('highlight-found');
+            else if (type === 'dug') banner.classList.add('highlight-dug');
+            else if (type === 'miss') banner.classList.add('highlight-miss');
+
+            document.getElementById('dig-status-text').innerHTML = html;
+            const activeP = digPlayers[digActivePlayerIdx];
+            if (activeP) {
+                document.getElementById('dig-turn-badge').textContent = `${activeP.avatar} ${activeP.name} am Zug`;
+            }
+        }
+
+        function renderDigBattleArena() {
+            const t = getDigThemeObj();
+            const povIdx = digMode === 'bot' ? 0 : digActivePlayerIdx;
+            const oppIdx = 1 - povIdx;
+            const povP = digPlayers[povIdx];
+            const oppP = digPlayers[oppIdx];
+            if (!povP || !oppP) return;
+
+            document.getElementById('dig-left-companion-panel').classList.toggle('active-turn-panel', digActivePlayerIdx === povIdx);
+            document.getElementById('dig-right-companion-panel').classList.toggle('active-turn-panel', digActivePlayerIdx === oppIdx);
+
+            document.getElementById('dig-pet-avatar-left').textContent = povP.avatar;
+            document.getElementById('dig-pet-name-left').textContent = `${povP.petName} (${povP.name})`;
+            document.getElementById('dig-pet-mood-left').textContent =
+                digActivePlayerIdx === povIdx ? 'Bereit zum Buddeln! 🐾' : 'Schaut gespannt zu 👀';
+
+            document.getElementById('dig-pet-avatar-right').textContent = oppP.avatar;
+            document.getElementById('dig-pet-name-right').textContent = `${oppP.petName} (${oppP.name})`;
+            document.getElementById('dig-pet-mood-right').textContent =
+                digActivePlayerIdx === oppIdx ? 'Schnüffelt nach Schätzen... 🐾' : 'Bewacht das Feld 🛡️';
+
+            renderDigDugList('dig-dug-list-left', 'dig-dug-count-left', povP.dugByMe);
+            renderDigDugList('dig-dug-list-right', 'dig-dug-count-right', oppP.dugByMe);
+
+            document.getElementById('dig-own-board-title').textContent =
+                digPovMasked ? '🔒 Spielfeld (Verdeckt)' : `${t.boardNameOwn} (${povP.name})`;
+            document.getElementById('dig-target-board-title').textContent =
+                digPovMasked ? '🔒 Such-Feld (Verdeckt)' : `${t.boardNameTarget}`;
+
+            const ownRem = t.items.length - oppP.dugByMe.length;
+            const targetRem = t.items.length - povP.dugByMe.length;
+            document.getElementById('dig-own-remaining-pill').textContent = digPovMasked ? '—' : `Noch ${ownRem} versteckt`;
+            document.getElementById('dig-target-remaining-pill').textContent = digPovMasked ? '—' : `Noch ${targetRem} versteckt`;
+
+            renderSingleDigBattleGrid('dig-own-battle-grid', povP, true, false);
+            renderSingleDigBattleGrid('dig-target-battle-grid', oppP, false, true);
+        }
+
+        function renderDigDugList(listId, countId, dugIds) {
+            const t = getDigThemeObj();
+            document.getElementById(countId).textContent = `${dugIds.length} / ${t.items.length}`;
+            document.getElementById(listId).innerHTML = t.items.map(item => {
+                const isRecovered = !digPovMasked && dugIds.includes(item.id);
+                return `
+                        <div class="dig-dug-slot ${isRecovered ? 'recovered' : ''}">
+                            <span>${isRecovered ? item.icon : '❔'} ${item.name}</span>
+                            <span style="font-size:0.68rem;">${item.size}F ${isRecovered ? '✓' : ''}</span>
+                        </div>`;
+            }).join('');
+        }
+
+        function renderSingleDigBattleGrid(containerId, boardOwner, showUnrevealedItems, isClickableTarget) {
+            const t = getDigThemeObj();
+            const gridEl = document.getElementById(containerId);
+            if (!gridEl || !boardOwner) return;
+
+            const frag = document.createDocumentFragment();
+            for (let r = 0; r < DIG_GRID_SIZE; r++) {
+                for (let c = 0; c < DIG_GRID_SIZE; c++) {
+                    const cellEl = document.createElement('div');
+                    cellEl.className = 'dig-cell';
+                    cellEl.dataset.r = r;
+                    cellEl.dataset.c = c;
+
+                    if (!digPovMasked) {
+                        const cell = boardOwner.grid[r][c];
+                        const itemDef = cell.itemId ? t.items.find(it => it.id === cell.itemId) : null;
+                        const placement = cell.itemId ? boardOwner.placements[cell.itemId] : null;
+
+                        if (cell.dug) {
+                            if (!cell.itemId) {
+                                cellEl.classList.add('cell-miss');
+                                cellEl.textContent = t.missIcon;
+                            } else if (placement && placement.fullyDug) {
+                                cellEl.classList.add('cell-dug-up');
+                                cellEl.textContent = itemDef ? itemDef.icon : '🏆';
+                            } else {
+                                cellEl.classList.add('cell-partial');
+                                cellEl.textContent = t.partialIcon;
+                            }
+                        } else if (showUnrevealedItems && cell.itemId) {
+                            cellEl.classList.add('own-buried');
+                            cellEl.textContent = itemDef ? itemDef.icon : '📦';
+                        }
+
+                        if (isClickableTarget && !cell.dug && !digActionLocked) {
+                            cellEl.addEventListener('click', () => handlePlayerDigClick(r, c, cellEl));
+                        }
+                    }
+                    frag.appendChild(cellEl);
+                }
+            }
+            gridEl.innerHTML = '';
+            gridEl.appendChild(frag);
+        }
+
+        // FIX #38: isLeftSideAttacker wird korrekt aus digActivePlayerIdx berechnet
+        function handlePlayerDigClick(r, c, targetCellEl) {
+            if (digPhase !== 'battle' || digActionLocked || digPovMasked) return;
+            if (digMode === 'bot' && digActivePlayerIdx !== 0) return;
+
+            const attacker = digPlayers[digActivePlayerIdx];
+            const defender = digPlayers[1 - digActivePlayerIdx];
+            if (!attacker || !defender || defender.grid[r][c].dug) return;
+
+            const isLeftSideAttacker = digActivePlayerIdx === 0;
+            executeDigSequence(attacker, defender, r, c, targetCellEl, isLeftSideAttacker);
+        }
+
+        function executeDigSequence(attacker, defender, r, c, targetCellEl, isLeftSideAttacker) {
+            digActionLocked = true;
+            const t = getDigThemeObj();
+
+            const homeSlotId = isLeftSideAttacker ? 'dig-pet-avatar-left' : 'dig-pet-avatar-right';
+            const trayBoxId = isLeftSideAttacker ? 'dig-dug-list-left' : 'dig-dug-list-right';
+            const homeSlotEl = document.getElementById(homeSlotId);
+            const trayBoxEl = document.getElementById(trayBoxId);
+            if (!homeSlotEl) { digActionLocked = false; return; }
+
+            const homeRect = homeSlotEl.getBoundingClientRect();
+            const cellRect = targetCellEl.getBoundingClientRect();
+
+            const runnerEl = document.getElementById('runner-pet');
+            const speechEl = document.getElementById('runner-speech');
+            const avatarEl = document.getElementById('runner-avatar');
+            const lootEl = document.getElementById('runner-loot');
+
+            homeSlotEl.classList.add('away-digging');
+            avatarEl.textContent = attacker.avatar;
+            speechEl.textContent = 'Ich lauf schon! 🐾';
+            lootEl.style.display = 'none';
+
+            runnerEl.style.transition = 'none';
+            runnerEl.style.display = 'flex';
+            runnerEl.style.left = (homeRect.left + homeRect.width / 2) + 'px';
+            runnerEl.style.top = (homeRect.top + homeRect.height / 2) + 'px';
+            runnerEl.style.transform = 'translate(-50%, -50%)';
+
+            void runnerEl.offsetWidth;
+
+            runnerEl.style.transition = `left ${DIG_TIMING.RUN_TO}ms cubic-bezier(0.34, 1.25, 0.64, 1), top ${DIG_TIMING.RUN_TO}ms cubic-bezier(0.34, 1.25, 0.64, 1)`;
+            runnerEl.style.left = (cellRect.left + cellRect.width / 2) + 'px';
+            runnerEl.style.top = (cellRect.top + cellRect.height / 2) + 'px';
+
+            registerDigTimeout(() => {
+                runnerEl.classList.add('digging-now');
+                speechEl.textContent = '*Buddel, buddel* 🐾';
+
+                registerDigTimeout(() => {
+                    runnerEl.classList.remove('digging-now');
+
+                    const cell = defender.grid[r][c];
+                    cell.dug = true;
+                    let outcome = 'miss';
+                    let foundItemDef = null;
+
+                    if (cell.itemId) {
+                        foundItemDef = t.items.find(it => it.id === cell.itemId);
+                        const pl = defender.placements[cell.itemId];
+                        const allHit = pl && pl.cells.every(([pr, pc]) => defender.grid[pr][pc].dug);
+                        if (allHit) {
+                            pl.fullyDug = true;
+                            outcome = 'dug';
+                            if (!attacker.dugByMe.includes(cell.itemId)) attacker.dugByMe.push(cell.itemId);
+                        } else {
+                            outcome = 'partial';
+                        }
+                    }
+
+                    renderDigBattleArena();
+
+                    if (outcome === 'miss') {
+                        speechEl.textContent = 'Nur Erde... 🕳️';
+                        setDigStatusMessage(
+                            `🕳️ <b>${attacker.petName}</b> (${attacker.name}) hat gegraben, aber an dieser Stelle war leider nur lockere Erde!`,
+                            'miss'
+                        );
+                    } else if (outcome === 'partial') {
+                        speechEl.textContent = 'Zu groß zum Heben! 🐾❗';
+                        setDigStatusMessage(
+                            `⚠️ <b>${attacker.petName}</b> meldet: „Ich habe etwas erschnüffelt, aber es ist <b>zu groß zum allein Ausgraben</b>! Leg noch die restlichen Teile frei!“`,
+                            'found'
+                        );
+                    } else if (outcome === 'dug') {
+                        speechEl.textContent = `Hab es: ${foundItemDef.name}! 🎉`;
+                        lootEl.textContent = foundItemDef.icon;
+                        lootEl.style.display = 'flex';
+                        setDigStatusMessage(
+                            `🎉 <b>${attacker.petName}</b> hat <b>${foundItemDef.icon} ${foundItemDef.name}</b> komplett ausgegraben und trägt den Schatz stolz zum Lager!`,
+                            'dug'
+                        );
+                    }
+
+                    registerDigTimeout(() => {
+                        const destRect = (outcome === 'dug' && trayBoxEl)
+                            ? trayBoxEl.getBoundingClientRect()
+                            : homeSlotEl.getBoundingClientRect();
+
+                        runnerEl.style.left = (destRect.left + destRect.width / 2) + 'px';
+                        runnerEl.style.top = (destRect.top + 28) + 'px';
+
+                        registerDigTimeout(() => {
+                            runnerEl.style.display = 'none';
+                            homeSlotEl.classList.remove('away-digging');
+
+                            if (attacker.dugByMe.length >= t.items.length) {
+                                digActionLocked = false;
+                                finishDigMatch(attacker);
+                                return;
+                            }
+
+                            registerDigTimeout(() => {
+                                digActionLocked = false;
+                                proceedToNextDigTurn();
+                            }, DIG_TIMING.RESULT_HOLD);
+                        }, DIG_TIMING.RUN_BACK / 2);
+                    }, DIG_TIMING.RUN_BACK / 2);
+                }, DIG_TIMING.DIG);
+            }, DIG_TIMING.RUN_TO);
+        }
+
+        function proceedToNextDigTurn() {
+            if (digPhase !== 'battle') return;
+            digActivePlayerIdx = 1 - digActivePlayerIdx;
+
+            if (digMode === 'bot') {
+                renderDigBattleArena();
+                if (digActivePlayerIdx === 1) {
+                    setDigStatusMessage(
+                        `🤖 <b>${digPlayers[1].petName}</b> (Bot) schnüffelt über deinem Garten und sucht eine Stelle zum Graben...`,
+                        'normal'
+                    );
+                    registerDigTimeout(performBotDigTurn, DIG_TIMING.BOT_DELAY);
+                } else {
+                    digActionLocked = false;
+                    setDigStatusMessage(
+                        `✨ Du bist wieder dran, <b>${digPlayers[0].name}</b>! Wo soll <b>${digPlayers[0].petName}</b> als Nächstes graben?`,
+                        'normal'
+                    );
+                }
+            } else {
+                const nextP = digPlayers[digActivePlayerIdx];
+                openDigPovSwitchModal(
+                    `Spielerwechsel zu ${nextP.name}!`,
+                    `Die Gärten im Hintergrund sind jetzt neutral ausgeblendet. Bitte übergebt das Gerät an ${nextP.name} (${nextP.avatar} ${nextP.petName}).`,
+                    () => {
+                        digActionLocked = false;
+                        renderDigBattleArena();
+                        setDigStatusMessage(
+                            `<b>${nextP.name}</b> ist am Zug! Wähle rechts auf dem Such-Feld einen Platz für <b>${nextP.petName}</b>.`,
+                            'normal'
+                        );
+                    }
+                );
+            }
+        }
+
+        function performBotDigTurn() {
+            if (digPhase !== 'battle') return;
+            const bot = digPlayers[1];
+            const human = digPlayers[0];
+            const coords = chooseDigBotTargetCell(human);
+            if (!coords) {
+                digActionLocked = false;
+                proceedToNextDigTurn();
+                return;
+            }
+            const [r, c] = coords;
+            const targetCellEl = document.querySelector(`#dig-own-battle-grid .dig-cell[data-r="${r}"][data-c="${c}"]`);
+            if (!targetCellEl) {
+                digActionLocked = false;
+                proceedToNextDigTurn();
+                return;
+            }
+            executeDigSequence(bot, human, r, c, targetCellEl, false);
+        }
+
+        function chooseDigBotTargetCell(humanPlayer) {
+            if (digBotDiff === 'medium') {
+                const partialCells = [];
+                for (let r = 0; r < DIG_GRID_SIZE; r++) {
+                    for (let c = 0; c < DIG_GRID_SIZE; c++) {
+                        const cell = humanPlayer.grid[r][c];
+                        const pl = cell.itemId ? humanPlayer.placements[cell.itemId] : null;
+                        if (cell.dug && cell.itemId && pl && !pl.fullyDug) partialCells.push([r, c]);
+                    }
+                }
+                const neighborCandidates = [];
+                partialCells.forEach(([r, c]) => {
+                    [[-1, 0], [1, 0], [0, -1], [0, 1]].forEach(([dr, dc]) => {
+                        const nr = r + dr, nc = c + dc;
+                        if (nr >= 0 && nr < DIG_GRID_SIZE && nc >= 0 && nc < DIG_GRID_SIZE && !humanPlayer.grid[nr][nc].dug) {
+                            neighborCandidates.push([nr, nc]);
+                        }
+                    });
+                });
+                if (neighborCandidates.length > 0) {
+                    return neighborCandidates[Math.floor(Math.random() * neighborCandidates.length)];
+                }
+            }
+            const undug = [];
+            for (let r = 0; r < DIG_GRID_SIZE; r++) {
+                for (let c = 0; c < DIG_GRID_SIZE; c++) {
+                    if (!humanPlayer.grid[r][c].dug) undug.push([r, c]);
+                }
+            }
+            return undug.length ? undug[Math.floor(Math.random() * undug.length)] : null;
+        }
+
+        function finishDigMatch(winner) {
+            digPhase = 'gameover';
+            stopDigGameTimers();
+
+            recordClassicFinish('dig', digMode, digBotDiff, winner.idx === 0 ? 1 : 2);
+
+            const modal = document.getElementById('dig-gameover-modal');
+            const iconEl = document.getElementById('dig-go-modal-icon');
+            const titleEl = document.getElementById('dig-go-modal-title');
+            const msgEl = document.getElementById('dig-go-modal-msg');
+
+            if (digMode === 'bot') {
+                if (winner.idx === 0) {
+                    iconEl.textContent = '🎉🐶🏆';
+                    titleEl.textContent = 'Gewonnen, Emma!';
+                    titleEl.style.color = '#2ed573';
+                    msgEl.textContent = `Unglaublich stark! ${winner.petName} hat alle 5 Schätze zuerst ausgegraben! ❤️`;
+                    launchConfetti();
+                    celebrateDachshunds();
+                } else {
+                    iconEl.textContent = '🌸🐾';
+                    titleEl.textContent = 'Knapp vorbei!';
+                    titleEl.style.color = '#ff6b81';
+                    msgEl.textContent = `${winner.petName} hatte diesmal eine etwas schnellere Spürnase. Probier es gleich nochmal, Emma! ❤️`;
+                }
+            } else {
+                iconEl.textContent = '🏆🎉';
+                titleEl.textContent = `${winner.name} gewinnt!`;
+                titleEl.style.color = '#2ed573';
+                msgEl.textContent = `Super gebuddelt! ${winner.petName} hat alle versteckten Schätze für ${winner.name} geborgen!`;
+                launchConfetti();
+                celebrateDachshunds();
+            }
+            modal.classList.add('active');
+        }
+
+        function closeDigGameOverAndRestart() {
+            document.getElementById('dig-gameover-modal').classList.remove('active');
+            initNewDigMatch();
+        }
+
+        function closeDigGameOverToMenu() {
+            document.getElementById('dig-gameover-modal').classList.remove('active');
+            returnToMenu();
         }
 
         /* =========================================================================
